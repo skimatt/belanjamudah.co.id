@@ -1,0 +1,48 @@
+# Sistem & OS
+.DS_Store
+Thumbs.db
+
+# Cache & Log
+application/cache/*
+!application/cache/index.html
+
+application/logs/*
+!application/logs/index.html
+
+# Pastikan htaccess tetap ikut
+!application/*/.htaccess
+
+# File sensitif
+/application/config/database.php
+/.env
+*.env
+
+# Dependency & Build
+/vendor/
+composer.lock
+
+# Testing / Mock
+tests/mocks/database/ci_test.sqlite
+/tests/tests/
+/tests/results/
+
+# User Guide (bawaan CI, biasanya tidak perlu di repo)
+user_guide_src/build/*
+user_guide_src/cilexer/build/*
+user_guide_src/cilexer/dist/*
+user_guide_src/cilexer/pycilexer.egg-info/*
+
+# IDE & Editor
+/nbproject/
+/.idea/*
+.vscode/
+
+## Sublime Text cache
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+
+# Uploads (opsional, kalau ada folder upload file user)
+# /uploads/*
