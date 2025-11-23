@@ -31,9 +31,7 @@
   <br>
 </div>
 
-<p align="center">
-  <img src="https://images.unsplash.com/photo-1556742049-0cfed4f7a07d?q=80&w=1000&auto=format&fit=crop" alt="App Preview" width="100%" style="border-radius: 10px;">
-</p>
+
 
 ---
 
