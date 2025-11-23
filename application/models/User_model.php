@@ -39,6 +39,14 @@ public function get_all_users_for_admin()
     $query = $this->db->get('users');
     return $query->result();
 }
+// Path File: application/models/User_model.php
+
+public function count_customers()
+{
+    // Hitung user yang BUKAN admin (is_admin = 0)
+    $this->db->where('is_admin', 0);
+    return $this->db->count_all_results('users');
+}
 
 // Mendapatkan pengguna berdasarkan ID (digunakan di Controller User/detail)
 public function get_user_by_id($id)

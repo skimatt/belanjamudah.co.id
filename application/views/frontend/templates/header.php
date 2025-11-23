@@ -107,43 +107,124 @@
         </div>
 
         <nav class="flex items-center space-x-2 md:space-x-4">
+
+          <!-- CART -->
           <a href="<?= site_url('cart'); ?>" class="text-gray-500 hover:text-blue-600 relative p-2 md:p-0">
-            <i class="ti ti-shopping-cart text-2xl md:text-3xl"></i>
+
+            <!-- Lucide: Shopping Cart -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 md:w-7 md:h-7" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path d="M6 6h15l-1.5 9h-13L4 2H1" />
+              <circle cx="9" cy="21" r="1" />
+              <circle cx="19" cy="21" r="1" />
+            </svg>
+
             <?php if ($cart_count > 0): ?>
-            <span
-              class="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold border-2 border-white">
+            <span class="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full 
+                   w-5 h-5 flex items-center justify-center font-bold border-2 border-white">
               <?= $cart_count > 9 ? '9+' : $cart_count; ?>
             </span>
             <?php endif; ?>
           </a>
 
+
           <?php if ($this->session->userdata('logged_in')): ?>
+
+          <!-- AKUN -->
           <a href="<?= site_url('account'); ?>"
-            class="hidden lg:block text-sm font-medium text-blue-600 hover:text-blue-800">Akun Saya</a>
+            class="hidden lg:flex items-center space-x-1 text-sm font-medium text-blue-600 hover:text-blue-800">
+
+            <!-- Lucide: User -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M6 20c0-3 3-6 6-6s6 3 6 6" />
+            </svg>
+            <span>Akun Saya</span>
+          </a>
+
+          <!-- LOGOUT -->
           <a href="<?= site_url('auth/logout'); ?>"
-            class="hidden lg:block text-sm text-red-500 hover:text-red-700">Logout</a>
+            class="hidden lg:flex items-center space-x-1 text-sm font-medium text-red-500 hover:text-red-700">
+
+            <!-- Lucide: Log Out -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>
+            <span>Logout</span>
+          </a>
+
           <?php else: ?>
+
+          <!-- LOGIN -->
           <a href="<?= site_url('auth/process_login'); ?>"
-            class="hidden md:block text-sm font-semibold text-blue-600 hover:bg-blue-50 px-5 py-2 rounded-lg transition-colors">Masuk</a>
+            class="hidden md:flex items-center space-x-1 text-sm font-semibold text-blue-600 hover:bg-blue-50 px-5 py-2 rounded-lg transition">
+
+            <!-- Lucide: Log In -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+              <polyline points="10 17 15 12 10 7" />
+              <line x1="15" y1="12" x2="3" y2="12" />
+            </svg>
+
+            <span>Masuk</span>
+          </a>
+
+          <!-- REGISTER -->
           <a href="<?= site_url('auth/register'); ?>"
-            class="hidden md:block text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg shadow-sm transition-colors">Daftar</a>
+            class="hidden md:flex items-center space-x-1 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg shadow-sm transition">
+
+            <!-- Lucide: User Plus -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="2">
+              <circle cx="9" cy="7" r="4" />
+              <path d="M17 11v6" />
+              <path d="M20 14h-6" />
+              <path d="M3 21c0-3 3-6 6-6s6 3 6 6" />
+            </svg>
+
+            <span>Daftar</span>
+          </a>
+
           <?php endif; ?>
         </nav>
+
       </div>
 
       <div class="container mx-auto px-4 py-2 border-t border-gray-100 hidden md:flex items-center justify-between">
-        <div class="flex items-center space-x-4 text-xs text-gray-500">
-          <span class="font-semibold">Cari:</span>
-          <a href="#" class="hover:text-blue-600 transition-colors">Rize x Corkcicle</a>
-          <a href="#" class="hover:text-blue-600 transition-colors">Kaleela 50%</a>
-          <a href="#" class="hover:text-blue-600 transition-colors">Hijab Cashback 75rb</a>
+
+        <div class="flex items-center space-x-4 text-xs">
+          <span class="font-bold text-[#0046A8]">Cari:</span>
+
+          <a href="<?= site_url('home/search?q=Ransel'); ?>"
+            class="font-bold text-[#0046A8] hover:underline transition">
+            Ransel
+          </a>
+
+          <a href="<?= site_url('home/search?q=headphone'); ?>"
+            class="font-bold text-[#0046A8] hover:underline transition">
+            Headphone
+          </a>
+
+          <a href="<?= site_url('home/search?q=sepatu'); ?>"
+            class="font-bold text-[#0046A8] hover:underline transition">
+            Sepatu Mall
+          </a>
         </div>
-        <div
-          class="hidden lg:flex items-center text-gray-600 text-xs hover:bg-gray-100 p-2 rounded-lg transition-colors cursor-pointer">
-          <i class="ti ti-map-pin text-lg mr-2"></i> Tambah alamat, biar belanja lebih asyik <i
-            class="ti ti-chevron-down ml-2"></i>
-        </div>
+
+        <a href="<?= site_url('account/addresses'); ?>"
+          class="hidden lg:flex items-center text-[#0046A8] font-bold text-xs hover:underline p-2 rounded-lg transition cursor-pointer">
+          <i class="ti ti-map-pin text-lg mr-2"></i>
+          Tambah alamat, biar belanja lebih asyik
+          <i class="ti ti-chevron-down ml-2"></i>
+        </a>
+
       </div>
+
     </header>
 
 
@@ -159,6 +240,7 @@
     <main class="container mx-auto px-4 py-6">
 
       <section class="mb-6 h-80 rounded-xl overflow-hidden shadow-lg relative" id="hero-slider">
+        <!-- Track gambar -->
         <div class="flex transition-transform duration-500 ease-in-out h-full" id="slider-track">
           <div class="w-full flex-shrink-0">
             <img src="<?= base_url('assets/img/slide_01.jpg'); ?>" class="w-full h-full object-cover" alt="Promo 1">
@@ -170,6 +252,16 @@
             <img src="<?= base_url('assets/img/slide_03.jpg'); ?>" class="w-full h-full object-cover" alt="Promo 3">
           </div>
         </div>
+
+        <!-- Tombol navigasi -->
+        <button id="prevBtn"
+          class="absolute top-1/2 left-4 -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-90 text-gray-700 p-2 rounded-full shadow-md transition">
+          <i class="ti ti-chevron-left"></i>
+        </button>
+        <button id="nextBtn"
+          class="absolute top-1/2 right-4 -translate-y-1/2 bg-white bg-opacity-70 hover:bg-opacity-90 text-gray-700 p-2 rounded-full shadow-md transition">
+          <i class="ti ti-chevron-right"></i>
+        </button>
       </section>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
@@ -231,6 +323,27 @@
 
       mobileMenuToggle.addEventListener('click', toggleMenu);
       closeMenuToggle.addEventListener('click', toggleMenu);
+    });
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const track = document.getElementById("slider-track");
+      const slides = track.children.length;
+      let index = 0;
+
+      function updateSlider() {
+        track.style.transform = `translateX(-${index * 100}%)`;
+      }
+
+      document.getElementById("nextBtn").addEventListener("click", () => {
+        index = (index + 1) % slides;
+        updateSlider();
+      });
+
+      document.getElementById("prevBtn").addEventListener("click", () => {
+        index = (index - 1 + slides) % slides;
+        updateSlider();
+      });
     });
     </script>
 </body>

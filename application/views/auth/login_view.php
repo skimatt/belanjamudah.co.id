@@ -1,74 +1,117 @@
-<!DOCTYPE html>
-<html lang="id">
+<?php
+// ===============================
+//  LOAD NAVBAR / HEADER
+// ===============================
+$this->load->view('frontend/templates/header');
+?>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Toko MVP</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<!-- STYLE UNTUK BACKGROUND SECTION -->
+<style>
+.bg-section {
+  background-image: url('<?= base_url("assets/shopping-bags-discount-online-sales.jpg"); ?>');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+</style>
 
-<body class="bg-gray-50 flex items-center justify-center min-h-screen">
-  <div class="w-full max-w-sm p-6 bg-white rounded-xl shadow-lg">
-    <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Login</h1>
+<!-- ===============================
+        BACKGROUND DALAM CONTAINER
+=============================== -->
+<section class="container mx-auto px-4 mt-10 mb-16">
 
-    <?php if ($this->session->flashdata('error')): ?>
-    <div class="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
-      <?= $this->session->flashdata('error'); ?>
+  <div class="w-full rounded-2xl overflow-hidden bg-section">
+
+    <!-- Overlay tipis supaya card kontras -->
+    <div class="w-full h-full bg-black/40 p-10 flex justify-center">
+
+      <!-- CARD LOGIN -->
+      <div class="w-full max-w-sm bg-white/40 backdrop-blur-md rounded-2xl shadow-xl border border-white/30 p-8">
+
+        <!-- Judul -->
+        <h1 class="text-3xl font-extrabold text-center text-white drop-shadow mb-1">Masuk Akun</h1>
+        <p class="text-sm text-center text-gray-200 drop-shadow mb-6">Akses dashboard dan mulai belanja.</p>
+
+        <!-- Alert -->
+        <?php if ($this->session->flashdata('error')): ?>
+        <div class="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg">
+          <?= $this->session->flashdata('error'); ?>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($this->session->flashdata('success')): ?>
+        <div class="p-3 mb-4 text-sm text-green-700 bg-green-100 rounded-lg">
+          <?= $this->session->flashdata('success'); ?>
+        </div>
+        <?php endif; ?>
+
+        <!-- Form Login -->
+        <?= form_open('auth/process_login', 'class="space-y-4"'); ?>
+        <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+          value="<?= $this->security->get_csrf_hash(); ?>">
+
+        <!-- Email -->
+        <div>
+          <label class="block text-sm font-medium text-white">Email</label>
+          <input type="email" name="email" value="<?= set_value('email'); ?>" required class="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300
+                        focus:ring-indigo-500 focus:border-indigo-500 shadow-sm">
+          <?= form_error('email', '<p class="text-xs text-red-300 mt-1">', '</p>'); ?>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <div class="flex justify-between">
+            <label class="block text-sm font-medium text-white">Password</label>
+            <a href="<?= site_url('auth/forgot_password'); ?>"
+              class="text-xs text-indigo-200 hover:text-white">Lupa?</a>
+          </div>
+          <input type="password" name="password" required class="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300
+                        focus:ring-indigo-500 focus:border-indigo-500 shadow-sm">
+          <?= form_error('password', '<p class="text-xs text-red-300 mt-1">', '</p>'); ?>
+        </div>
+
+        <!-- Tombol Login -->
+        <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-2.5 rounded-lg
+                       hover:bg-indigo-700 transition duration-200 shadow-md">
+          Masuk
+        </button>
+
+        <?= form_close(); ?>
+
+        <!-- Divider -->
+        <div class="relative flex justify-center my-6">
+          <span class="px-2 bg-white/50 text-gray-700 text-xs rounded-md backdrop-blur">atau</span>
+        </div>
+
+        <!-- Google Login -->
+        <a href="<?= $google_login_url; ?>" class="w-full flex items-center justify-center border-2 border-gray-300
+                  bg-white/70 backdrop-blur text-gray-700 py-2.5 rounded-lg
+                  hover:bg-white transition duration-200">
+
+          <img src="<?= base_url('assets/icons8-google-50.png'); ?>" class="w-5 h-5 mr-2" alt="Google">
+
+          <span class="font-medium">Masuk dengan Google</span>
+        </a>
+
+        <!-- Register -->
+        <p class="mt-6 text-center text-sm text-gray-200 drop-shadow">
+          Belum punya akun?
+          <a href="<?= site_url('auth/register'); ?>" class="font-medium text-white underline hover:text-indigo-200">
+            Daftar sekarang
+          </a>
+        </p>
+
+      </div>
+
     </div>
-    <?php endif; ?>
-    <?php if ($this->session->flashdata('success')): ?>
-    <div class="p-3 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
-      <?= $this->session->flashdata('success'); ?>
-    </div>
-    <?php endif; ?>
 
-    <?= form_open('auth/process_login', 'class="space-y-4"'); ?>
-    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
-      value="<?= $this->security->get_csrf_hash(); ?>">
-
-    <div>
-      <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-      <input type="email" name="email" value="<?= set_value('email'); ?>" required
-        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-      <?= form_error('email', '<p class="text-xs text-red-500 mt-1">', '</p>'); ?>
-    </div>
-
-    <div>
-      <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-      <input type="password" name="password" required
-        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-      <?= form_error('password', '<p class="text-xs text-red-500 mt-1">', '</p>'); ?>
-    </div>
-
-    <div class="flex items-center justify-between">
-      <a href="<?= site_url('auth/forgot_password'); ?>" class="text-sm text-indigo-600 hover:text-indigo-500">
-        Lupa Password?
-      </a>
-    </div>
-
-    <button type="submit"
-      class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-      Login
-    </button>
-    <?= form_close(); ?>
-
-    <div class="mt-6">
-      <a href="<?= $google_login_url; ?>"
-        class="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-        <img class="w-4 h-4 mr-2" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-          alt="Google Logo">
-        Login dengan Google
-      </a>
-    </div>
-
-    <p class="mt-6 text-center text-sm text-gray-600">
-      Belum punya akun?
-      <a href="<?= site_url('auth/register'); ?>" class="font-medium text-indigo-600 hover:text-indigo-500">
-        Daftar di sini
-      </a>
-    </p>
   </div>
-</body>
 
-</html>
+</section>
+
+<?php
+// ===============================
+//  FOOTER
+// ===============================
+$this->load->view('frontend/templates/footer');
+?>

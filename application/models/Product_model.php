@@ -218,4 +218,14 @@ class Product_model extends CI_Model {
         
         return $this->db->get()->result();
     }
+    // Path File: application/models/Product_model.php
+
+public function get_low_stock_count($threshold = 10)
+{
+    // Hitung varian di mana stok kurang dari threshold
+    $this->db->select('COUNT(id) as low_count');
+    $this->db->where('stock <=', $threshold);
+    $this->db->where('stock >', 0);
+    return $this->db->get('product_variants')->row()->low_count ?? 0;
+}
 }

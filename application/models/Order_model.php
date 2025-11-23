@@ -124,16 +124,25 @@ class Order_model extends CI_Model {
     // MARKAS: FUNGSI ADMIN (BACKEND)
     // =======================================================
 
-    // Mengambil daftar pesanan (untuk List Admin)
-    public function get_all_orders()
-    {
-        $this->db->select('o.*, u.full_name, u.email');
-        $this->db->from('orders o');
-        $this->db->join('users u', 'u.id = o.user_id');
-        $this->db->order_by('o.created_at', 'DESC');
-        $query = $this->db->get();
-        return $query->result();
+/**
+ * Mengambil daftar pesanan (untuk List Admin) dengan JOIN data pelanggan.
+ */
+public function get_all_orders($limit = 0)
+{
+    // PERBAIKAN KRITIS: Tambahkan u.email dan u.full_name ke SELECT
+    $this->db->select('o.*, u.full_name, u.email'); 
+    $this->db->from('orders o');
+    // Wajib ada JOIN ke tabel users
+    $this->db->join('users u', 'u.id = o.user_id', 'left'); 
+    $this->db->order_by('o.created_at', 'DESC');
+    
+    if ($limit > 0) {
+        $this->db->limit($limit);
     }
+    
+    $query = $this->db->get();
+    return $query->result();
+}
 
     // Fungsi untuk memperbarui status pesanan (dipanggil oleh Admin)
     public function update_order_status($order_id, $new_status, $tracking_number = NULL)
@@ -242,4 +251,6 @@ public function get_order_detail($order_id)
     $this->db->where('o.id', $order_id);
     return $this->db->get()->row();
 }
+
+
 }

@@ -46,3 +46,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 # Uploads (opsional, kalau ada folder upload file user)
 # /uploads/*
+
+
+/application/config/google.php
+.env

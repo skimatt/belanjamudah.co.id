@@ -156,47 +156,160 @@ class Auth extends CI_Controller {
         }
     }
     
-    // --- LUPA PASSWORD (Form Input Email) ---
-    public function forgot_password()
-    {
-        // ... (Logika forgot_password tetap sama) ...
-        $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|xss_clean');
+// --- LUPA PASSWORD (Form Input Email) ---
+public function forgot_password()
+{
+    $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email|xss_clean');
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('auth/forgot_password_view'); // Tampilkan form
-        } else {
-            $email = $this->input->post('email', TRUE);
-            $user = $this->User_model->get_user_by_email($email);
+    if ($this->form_validation->run() == FALSE) {
+        $this->load->view('auth/forgot_password_view');
 
-            if ($user) {
-                $token = bin2hex(random_bytes(32)); 
-                $expiry = date('Y-m-d H:i:s', time() + (60 * 30)); 
-                $this->User_model->update_user($user->id, ['reset_token' => $token, 'token_expiry' => $expiry]);
-                
-                $reset_link = site_url('auth/reset_password/' . $token);
-                $subject = 'Permintaan Reset Password Toko MVP';
-                $message = 'Halo ' . $user->full_name . ',<br><br> Silakan klik link berikut (berlaku 30 menit):<br>'
-                         . '<a href="' . $reset_link . '">RESET PASSWORD</a><br><br>'
-                         . 'Jika Anda tidak meminta ini, abaikan email ini.';
+    } else {
 
-                $this->load->library('email');
-                $this->email->from($this->config->item('smtp_user'), 'Toko MVP Support');
-                $this->email->to($user->email);
-                $this->email->subject($subject);
-                $this->email->message($message);
+        $email = $this->input->post('email', TRUE);
+        $user  = $this->User_model->get_user_by_email($email);
 
-                if ($this->email->send()) {
-                    $this->session->set_flashdata('success', 'Link reset password telah dikirim ke email Anda.');
-                } else {
-                    $this->session->set_flashdata('error', 'Gagal mengirim email reset: ' . $this->email->print_debugger());
-                    log_message('error', 'Email Debugger: ' . $this->email->print_debugger());
-                }
+        if ($user) {
+
+            // Generate token + expiry
+            $token  = bin2hex(random_bytes(32));
+            $expiry = date('Y-m-d H:i:s', time() + (60 * 30)); // 30 menit
+
+            // Save token
+            $this->User_model->update_user($user->id, [
+                'reset_token'  => $token,
+                'token_expiry' => $expiry
+            ]);
+
+            // Reset link
+            $reset_link = site_url('auth/reset_password/' . $token);
+
+            // SUBJECT
+            $subject = 'Reset Password - BelanjaMudah.co.id';
+
+            // MESSAGE (HTML PREMIUM)
+            $message = '
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Password - BelanjaMudah.co.id</title>
+</head>
+
+<body style="margin:0; padding:0; background:#f3f6fb; font-family:Arial, sans-serif;">
+
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f3f6fb; padding:20px 0;">
+    <tr>
+        <td align="center">
+
+            <!-- WRAPPER -->
+            <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" 
+                   style="background:white; border-radius:12px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+
+                <!-- HEADER -->
+                <tr>
+                    <td style="background:#1e40af; padding:25px 20px; text-align:center;">
+                        <h1 style="margin:0; font-size:26px; color:white; letter-spacing:0.5px;">
+                            BelanjaMudah.co.id
+                        </h1>
+                        <p style="margin:5px 0 0; font-size:13px; color:#c7d2fe;">
+                            Kemudahan Belanja Dalam Genggaman
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- BODY -->
+                <tr>
+                    <td style="padding:30px 35px; color:#111827; font-size:15px; line-height:1.7;">
+
+                        <p>Halo <strong>' . $user->full_name . '</strong>,</p>
+
+                        <p>
+                            Kami menerima permintaan untuk mereset password akun Anda di 
+                            <strong>BelanjaMudah.co.id</strong>.
+                        </p>
+
+                        <p>
+                            Silakan klik tombol di bawah ini untuk membuat password baru.<br>
+                            <small>(Link hanya berlaku <strong>30 menit</strong>)</small>
+                        </p>
+
+                        <!-- BUTTON -->
+                        <div style="text-align:center; margin:30px 0;">
+                            <a href="' . $reset_link . '" 
+                               style="background:#2563eb; color:white; padding:14px 30px; 
+                                      text-decoration:none; font-size:15px; font-weight:bold;
+                                      border-radius:8px; display:inline-block;">
+                                Reset Password
+                            </a>
+                        </div>
+
+                        <p>Atau gunakan link berikut:</p>
+                        <p style="word-break:break-all; color:#2563eb;">
+                            <a href="' . $reset_link . '" style="color:#2563eb;">' . $reset_link . '</a>
+                        </p>
+
+                        <p style="margin-top:25px;">
+                            Jika Anda tidak meminta reset password, abaikan email ini. 
+                            Akun Anda akan tetap aman.
+                        </p>
+
+                        <p style="margin-top:30px; color:#6b7280; font-size:13px;">
+                            Hormat kami,<br>
+                            <strong>Tim Support BelanjaMudah.co.id</strong>
+                        </p>
+
+                    </td>
+                </tr>
+
+                <!-- FOOTER -->
+                <tr>
+                    <td style="background:#f1f5f9; padding:15px; text-align:center; color:#6b7280; font-size:12px;">
+                        © ' . date("Y") . ' BelanjaMudah.co.id — Semua Hak Dilindungi
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>
+            ';
+
+            // Load Email Config
+            $this->load->config('email');
+            $this->load->library('email');
+
+            $this->email->from('rahmatzkk10@gmail.com', 'BelanjaMudah.co.id Support');
+            $this->email->to($user->email);
+            $this->email->subject($subject);
+            $this->email->message($message);
+
+            // Send Email
+            if ($this->email->send()) {
+
+                $this->session->set_flashdata('success', 'Link reset password telah dikirim ke email Anda.');
+
             } else {
-                $this->session->set_flashdata('success', 'Jika email terdaftar, link reset akan dikirim.'); 
+                $dbg = $this->email->print_debugger();
+                $this->session->set_flashdata('error', 'Gagal mengirim email reset.');
+                log_message('error', 'EMAIL DEBUGGER: ' . $dbg);
             }
-            redirect('auth');
+
+        } else {
+            $this->session->set_flashdata(
+                'success',
+                'Jika email terdaftar, link reset akan dikirim.'
+            );
         }
+
+        redirect('auth');
     }
+}
+
+
 
     // --- RESET PASSWORD (Token Validation & Update) ---
     public function reset_password($token = NULL)

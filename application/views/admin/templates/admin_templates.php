@@ -33,6 +33,7 @@
   <script src="<?= base_url('assets/vendor/js/helpers.js'); ?>"></script>
   <script src="<?= base_url('assets/vendor/js/template-customizer.js'); ?>"></script>
   <script src="<?= base_url('assets/js/config.js'); ?>"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -42,14 +43,59 @@
       <!-- Sidebar -->
       <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
         <div class="app-brand demo">
-          <a href="<?= site_url('dashboard'); ?>" class="app-brand-link">
-            <span class="app-brand-logo demo"></span>
-            <span class="app-brand-text demo menu-text fw-bold">MVP Store</span>
+          <a href="<?= site_url('dashboard'); ?>" class="app-brand-link flex items-center space-x-2">
+
+            <!-- LOGO SVG -->
+            <span class="app-brand-logo demo">
+              <svg width="40" height="40" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"
+                class="rounded-md">
+
+                <defs>
+                  <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#2563EB" />
+                    <stop offset="100%" stop-color="#1E3A8A" />
+                  </linearGradient>
+
+                  <linearGradient id="bagGrad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.98" />
+                    <stop offset="100%" stop-color="#E2E8F0" stop-opacity="0.98" />
+                  </linearGradient>
+                </defs>
+
+                <rect width="200" height="200" rx="28" fill="url(#bgGrad)" />
+
+                <g transform="translate(40,35)">
+                  <rect x="10" y="40" width="100" height="90" rx="14" fill="url(#bagGrad)" stroke="#E0E7FF"
+                    stroke-width="3" />
+
+                  <path d="M35 40 C35 10, 85 10, 85 40" stroke="white" stroke-width="8" stroke-linecap="round" />
+
+                  <path d="M35 75 L50 95 L65 75 L80 95 L95 75" stroke="#1E40AF" stroke-width="7" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </g>
+              </svg>
+            </span>
+
+            <!-- BRAND TEXT -->
+            <span class="app-brand-text demo menu-text fw-bold text-primary"
+              style="font-size: 1.35rem; letter-spacing: .3px;">
+              BelanjaMudah
+            </span>
+
           </a>
-          <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-            <i class="ti ti-x d-block d-xl-none ti-md align-middle"></i>
+
+          <!-- TOGGLE BUTTON MOBILE -->
+          <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
           </a>
         </div>
+
+
+
         <div class="menu-inner-shadow"></div>
 
         <?php $active = $this->uri->segment(2); ?>
@@ -222,6 +268,7 @@
   <script src="<?= base_url('assets/vendor/libs/hammer/hammer.js'); ?>"></script>
   <script src="<?= base_url('assets/vendor/js/menu.js'); ?>"></script>
   <script src="<?= base_url('assets/js/main.js'); ?>"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </body>
 

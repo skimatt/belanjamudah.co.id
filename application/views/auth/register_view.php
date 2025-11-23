@@ -1,87 +1,127 @@
-<!DOCTYPE html>
-<html lang="id">
+<?php
+// ===============================
+//  LOAD NAVBAR / HEADER
+// ===============================
+$this->load->view('frontend/templates/header');
+?>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daftar Akun Baru</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+<style>
+.bg-section {
+  background-image: url('<?= base_url("assets/shopping-bags-discount-online-sales.jpg"); ?>');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+</style>
 
-<body class="bg-gray-50 flex items-center justify-center min-h-screen">
-  <div class="w-full max-w-md p-8 bg-white rounded-xl shadow-lg">
-    <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">Daftar Akun</h1>
+<section class="container mx-auto px-4 mt-10 mb-16">
 
-    <?php if ($this->session->flashdata('error')): ?>
-    <div class="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
-      <?= $this->session->flashdata('error'); ?>
-    </div>
-    <?php endif; ?>
+  <div class="w-full rounded-2xl overflow-hidden bg-section">
 
-    <?= form_open('auth/register', 'class="space-y-4"'); ?>
+    <!-- Overlay -->
+    <div class="w-full h-full bg-black/40 p-10 flex justify-center">
 
-    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
-      value="<?= $this->security->get_csrf_hash(); ?>">
+      <!-- CARD REGISTER -->
+      <div class="w-full max-w-md bg-white/40 backdrop-blur-md rounded-2xl shadow-xl 
+                  border border-white/30 p-8">
 
-    <div>
-      <label for="full_name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-      <input type="text" name="full_name" value="<?= set_value('full_name'); ?>" required
-        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-      <?= form_error('full_name', '<p class="text-xs text-red-500 mt-1">', '</p>'); ?>
-    </div>
+        <!-- Judul -->
+        <h1 class="text-3xl font-extrabold text-center text-white drop-shadow mb-1">
+          Daftar Akun
+        </h1>
+        <p class="text-sm text-center text-gray-200 drop-shadow mb-6">
+          Buat akun baru dan mulai belanja dengan mudah.
+        </p>
 
-    <div>
-      <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-      <input type="email" name="email" value="<?= set_value('email'); ?>" required
-        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-      <?= form_error('email', '<p class="text-xs text-red-500 mt-1">', '</p>'); ?>
-    </div>
+        <!-- Alert -->
+        <?php if ($this->session->flashdata('error')): ?>
+        <div class="p-3 mb-4 text-sm text-red-700 bg-red-100 rounded-lg">
+          <?= $this->session->flashdata('error'); ?>
+        </div>
+        <?php endif; ?>
 
-    <div>
-      <label for="password" class="block text-sm font-medium text-gray-700">Password (min 8 karakter)</label>
-      <input type="password" name="password" required
-        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-      <?= form_error('password', '<p class="text-xs text-red-500 mt-1">', '</p>'); ?>
-    </div>
+        <!-- FORM REGISTER -->
+        <?= form_open('auth/register', 'class="space-y-4"'); ?>
 
-    <div>
-      <label for="passconf" class="block text-sm font-medium text-gray-700">Konfirmasi Password</label>
-      <input type="password" name="passconf" required
-        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-      <?= form_error('passconf', '<p class="text-xs text-red-500 mt-1">', '</p>'); ?>
-    </div>
+        <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>"
+          value="<?= $this->security->get_csrf_hash(); ?>">
 
-    <button type="submit"
-      class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-      Daftar Akun
-    </button>
-    <?= form_close(); ?>
+        <!-- Nama Lengkap -->
+        <div>
+          <label class="block text-sm font-medium text-white">Nama Lengkap</label>
+          <input type="text" name="full_name" value="<?= set_value('full_name'); ?>" required class="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300
+                        focus:ring-indigo-500 focus:border-indigo-500 shadow-sm">
+          <?= form_error('full_name', '<p class="text-xs text-red-300 mt-1">', '</p>'); ?>
+        </div>
 
-    <div class="mt-6 relative">
-      <div class="absolute inset-0 flex items-center">
-        <div class="w-full border-t border-gray-300"></div>
+        <!-- Email -->
+        <div>
+          <label class="block text-sm font-medium text-white">Email</label>
+          <input type="email" name="email" value="<?= set_value('email'); ?>" required class="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300
+                        focus:ring-indigo-500 focus:border-indigo-500 shadow-sm">
+          <?= form_error('email', '<p class="text-xs text-red-300 mt-1">', '</p>'); ?>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="block text-sm font-medium text-white">Password</label>
+          <input type="password" name="password" required class="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300
+                        focus:ring-indigo-500 focus:border-indigo-500 shadow-sm">
+          <?= form_error('password', '<p class="text-xs text-red-300 mt-1">', '</p>'); ?>
+        </div>
+
+        <!-- Konfirmasi Password -->
+        <div>
+          <label class="block text-sm font-medium text-white">Konfirmasi Password</label>
+          <input type="password" name="passconf" required class="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300
+                        focus:ring-indigo-500 focus:border-indigo-500 shadow-sm">
+          <?= form_error('passconf', '<p class="text-xs text-red-300 mt-1">', '</p>'); ?>
+        </div>
+
+        <!-- Tombol Daftar -->
+        <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-2.5 rounded-lg
+                       hover:bg-indigo-700 transition duration-200 shadow-md">
+          Daftar Akun
+        </button>
+
+        <?= form_close(); ?>
+
+        <!-- Divider -->
+        <div class="relative flex justify-center my-6">
+          <span class="px-2 bg-white/50 text-gray-700 text-xs rounded-md backdrop-blur">
+            atau
+          </span>
+        </div>
+
+        <!-- Daftar dengan Google -->
+        <a href="<?= site_url('auth/google_login'); ?>" class="w-full flex items-center justify-center border-2 border-gray-300
+                  bg-white/70 backdrop-blur text-gray-700 py-2.5 rounded-lg
+                  hover:bg-white transition duration-200">
+
+          <img src="<?= base_url('assets/icons8-google-50.png'); ?>" class="w-5 h-5 mr-2" alt="Google">
+
+          <span class="font-medium">Daftar dengan Google</span>
+        </a>
+
+        <!-- Sudah punya akun -->
+        <p class="mt-6 text-center text-sm text-gray-200 drop-shadow">
+          Sudah punya akun?
+          <a href="<?= site_url('auth'); ?>" class="font-medium text-white underline hover:text-indigo-200">
+            Masuk di sini
+          </a>
+        </p>
+
       </div>
-      <div class="relative flex justify-center text-sm">
-        <span class="px-2 bg-white text-gray-500">Atau daftar dengan</span>
-      </div>
+
     </div>
 
-    <div class="mt-6">
-      <a href="<?= site_url('auth/google_login'); ?>"
-        class="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-        <img class="w-4 h-4 mr-2" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
-          alt="Google Logo">
-        Daftar dengan Google
-      </a>
-    </div>
-
-    <p class="mt-6 text-center text-sm text-gray-600">
-      Sudah punya akun?
-      <a href="<?= site_url('auth'); ?>" class="font-medium text-indigo-600 hover:text-indigo-500">
-        Login di sini
-      </a>
-    </p>
   </div>
-</body>
 
-</html>
+</section>
+
+<?php
+// ===============================
+//  FOOTER
+// ===============================
+$this->load->view('frontend/templates/footer');
+?>
