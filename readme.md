@@ -78,7 +78,7 @@ Berikut adalah fitur-fitur canggih yang disematkan dalam aplikasi ini:
 
 ## 📸 Galeri Antarmuka
 
-> *Tampilan antarmuka yang dirancang dengan prinsip estetika modern.*
+
 
 | Homepage Premium | Detail Produk |
 | :---: | :---: |
