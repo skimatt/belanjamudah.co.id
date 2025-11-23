@@ -119,7 +119,7 @@ Ikuti langkah-langkah berikut untuk menjalankan proyek ini di komputer lokal And
 2.  **Konfigurasi Database**
     * Buat database baru di phpMyAdmin bernama `belanjamudah_db`.
     * Import file `database.sql` yang ada di folder `/db` ke dalam database tersebut.
-		* kalau tidak ada dm ig : @skimatt_
+		* kalau tidak menemukan nya dm ig : @skimatt_
 
 3.  **Konfigurasi Proyek**
     * Buka `application/config/database.php` dan sesuaikan username/password database.
